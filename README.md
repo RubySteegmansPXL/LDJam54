@@ -1,2 +1,2 @@
-# ExcellentiePong
-Pong voor het excellentieprogramma
+# TD
+LDJAM54
