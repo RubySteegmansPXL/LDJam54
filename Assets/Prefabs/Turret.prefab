@@ -431,5 +431,7 @@ MonoBehaviour:
   target: {fileID: 0}
   rotatePoint: {fileID: 2271363458427317074}
   firePoint: {fileID: 7021991241615739763}
+  bulletPrefab: {fileID: 5860823348338798249, guid: fbf0d67b9fd8d4743b94e0f55ef0359b, type: 3}
   range: 10
   seekSpeed: 2
+  shootSpeed: 2

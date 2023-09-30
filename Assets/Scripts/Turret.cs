@@ -7,15 +7,18 @@ public class Turret : MonoBehaviour
     public Transform target = null;
     public GameObject rotatePoint;
     public GameObject firePoint;
+    public Bullet bulletPrefab;
     public float range = 10f;
     public float seekSpeed = 2f;
+    public float shootSpeed = 1f;
 
     private float seekTimer;
+    private float shootTimer;
 
     void Start()
     {
         seekTimer = seekSpeed;
-
+        shootTimer = shootSpeed;
     }
     void Update()
     {
@@ -24,27 +27,28 @@ public class Turret : MonoBehaviour
             seekTimer -= Time.deltaTime;
             if (seekTimer <= 0)
             {
-                Debug.Log("Counter reached");
                 seekTimer = seekSpeed;
                 TargetUpdate();
             }
         }
         TrackEnemy();
-        Shoot();
+        shootTimer -= Time.deltaTime;
+        if (shootTimer <= 0)
+        {
+            shootTimer = shootSpeed;
+            Shoot();
+        }        
     }
     void TargetUpdate()
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         float shortestDistance = Mathf.Infinity;
         Enemy nearestEnemy = null;
-
         foreach (Enemy enemy in enemies)
         {
-            Debug.Log("Looping trough enemies:" + enemies);
-            float distanceToEnemy = Vector3.Distance(transform.position, target.transform.position);
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
             if(distanceToEnemy < shortestDistance)
             {
-                Debug.Log("Distance: " + shortestDistance);
                 shortestDistance = distanceToEnemy;
                 nearestEnemy = enemy;
             }
@@ -61,14 +65,24 @@ public class Turret : MonoBehaviour
 
     void Shoot()
     {
-        
+        Bullet newBullet = Instantiate(bulletPrefab);
+        newBullet.transform.forward = transform.forward;
+        newBullet.transform.Rotate(0, -90, 0);
+        newBullet.transform.position = firePoint.transform.position;
     }
 
     void TrackEnemy()
     {
-        Vector3 direction = target.transform.position - transform.position;
-        direction.Normalize();
+        if (Vector3.Distance(transform.position, target.transform.position) > range)
+        {
+            target = null;
+        }
 
-        rotatePoint.transform.up = direction;
+        Vector3 targetPosition = target.position;
+        targetPosition.y = transform.position.y;
+        transform.LookAt(targetPosition);
+
+        // Rotate the turret by 90 degrees around the Y-axis
+        transform.Rotate(0, 90, 0);
     }
 }

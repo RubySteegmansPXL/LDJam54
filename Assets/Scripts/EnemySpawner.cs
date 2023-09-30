@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
         timeToNextSpawn -= Time.deltaTime;
         if (timeToNextSpawn > 0) return;
         Enemy enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        Enemy e = GameObject.Instantiate<Enemy>(enemyPrefab);
+        Enemy e = Instantiate(enemyPrefab);
         e.transform.position = transform.position;
         timeToNextSpawn = Random.Range(spawnRate.x, spawnRate.y);
     }
