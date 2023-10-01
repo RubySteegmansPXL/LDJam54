@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    public GameObject standardTurret;
+    public TurretBlueprint standardTurret;
 
     BuildManager buildManager;
 

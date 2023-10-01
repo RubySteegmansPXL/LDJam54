@@ -1,35 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
+
     void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
+            Debug.LogError("More than one BuildManager in scene!");
             return;
         }
         instance = this;
     }
 
-    public GameObject standartTurretToBuild;
+    public GameObject buildEffect;
+    public GameObject sellEffect;
 
-    void Start()
+
+    private TurretBlueprint turretToBuild;
+    public int currentTurrets = 0;
+    private int turretLimit = 1;
+
+    public int TurretLimit
     {
-        turretToBuild = standartTurretToBuild;
+        set { turretLimit = value;}
     }
 
-    private GameObject turretToBuild;
+    public bool CanBuild { get { return turretToBuild != null || currentTurrets >= turretLimit; } }
+    public bool HasMoney { get { return PlayerStats.Money >= turretToBuild.cost; } }
 
-    public GameObject GetTurretToBuild()
-    {
-        return turretToBuild;
-    }
-
-    public void SelectTurretToBuild(GameObject turret)
+    public void SelectTurretToBuild(TurretBlueprint turret)
     {
         turretToBuild = turret;
+    }
+
+    public TurretBlueprint GetTurretToBuild()
+    {
+        return turretToBuild;
     }
 }
