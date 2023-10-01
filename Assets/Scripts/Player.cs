@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 
         if(Lives <= 0)
         {
-
+            EventManager.instance.GameStateChanged(GameState.GAMEOVER);
         }
     }
 }

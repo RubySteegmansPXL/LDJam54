@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     private EnemySpawner enemySpawner;
     public Player player;
+    public GameObject gameOverMenu;
+    public Text gameOverText;
 
     private void Awake()
     {
@@ -47,7 +50,16 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        gameState = GameState.GAMEOVER;
+        enemySpawner.enabled = false;
+
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach(Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+
+        gameOverMenu.SetActive(true);
+        gameOverText.text = "Oops, you died... You made it to wave: " + player.score;
     }
 
     public void MainMenu()

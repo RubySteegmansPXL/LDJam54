@@ -31,6 +31,10 @@ public class EventManager : MonoBehaviour
         {
             OnGameStateChanged?.Invoke(state);
         }
+        if(state == GameState.GAMEOVER)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 
     public void WaveCompleted(int score)
