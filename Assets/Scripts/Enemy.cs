@@ -6,17 +6,6 @@ public class Enemy : MonoBehaviour
 {
     public int health = 1;
     public int damage = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,11 +13,12 @@ public class Enemy : MonoBehaviour
 
         if (bullet != null)
         {
+            bullet.HitEffect();
             health--;
 
             if (health == 0)
             {
-                //EZCameraShake.CameraShaker.Instance.ShakeOnce(1f, 5f, 0, 0.2f);
+                GameManager.instance.player.AddMoney(Random.Range(10, 25));
                 Destroy(other.gameObject);
                 Destroy(gameObject);
             }

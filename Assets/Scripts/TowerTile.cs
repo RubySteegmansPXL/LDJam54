@@ -27,9 +27,8 @@ public class TowerTile : MonoBehaviour
     private void OnMouseDown()
     {
         if (buildManager.towerCount >= GameManager.instance.player.TilesUnlocked) return;
-
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
+        if(!buildManager.CanBuild) return;
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (turret != null)
         {
@@ -41,8 +40,11 @@ public class TowerTile : MonoBehaviour
     private void BuildTower()
     {
         TurretBlueprint print = buildManager.GetTurretToBuild();
+        if (print == null) { Debug.Log("no turret available"); }
         turret = Instantiate(print.prefab, transform.position + positionOffset, transform.rotation);
         buildManager.towerCount++;
+        buildManager.SelectTurretToBuild(null);
+        GameManager.instance.player.Buy(print.cost);
     }
     private void OnMouseEnter()
     {

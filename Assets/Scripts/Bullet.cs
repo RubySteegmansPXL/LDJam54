@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     {
         transform.position = transform.position + transform.forward * speed * Time.deltaTime;
     }
-    void OnDestroy()
+    public void HitEffect()
     {
         GameObject effect = Instantiate(hitParticles, transform.position, transform.rotation);
         Destroy(effect, 2f);

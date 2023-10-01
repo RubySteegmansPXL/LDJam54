@@ -28,7 +28,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        enemySpawner = GetComponent<EnemySpawner>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+        if (enemySpawner == null)
+        {
+            Debug.LogError("EnemySpawner not found in the scene!");
+        }
     }
 
     public void StartGame()

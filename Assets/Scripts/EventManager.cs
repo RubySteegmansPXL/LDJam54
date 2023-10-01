@@ -22,7 +22,11 @@ public class EventManager : MonoBehaviour
     }
 
     public static event Action OnGameStart;
-    public static event Action<int> OnWaveCompleted;
+    public static event Action OnWaveCompleted;
+    public static event Action OnMoneyGained;
+    public static event Action OnItemBought;
+    public static event Action OnDamageTaken;
+    public static event Action OnTowerPlaced;
     public static event Action<GameState> OnGameStateChanged;
 
     public void GameStateChanged(GameState state)
@@ -37,16 +41,35 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void WaveCompleted(int score)
+    public void WaveCompleted()
     {
         if(OnWaveCompleted != null)
         {
-            OnWaveCompleted?.Invoke(score);
+            OnWaveCompleted?.Invoke();
         }
     }
 
     public static void Start()
     {
         OnGameStart?.Invoke();
+    }
+
+    public static void MoneyGained()
+    {
+        OnMoneyGained?.Invoke();
+    }
+
+    public static void ItemBought()
+    {
+        OnItemBought?.Invoke();
+    }
+
+    public static void DamageTaken()
+    {
+        OnDamageTaken?.Invoke();
+    }
+    public static void TowerPlaced()
+    {
+        OnTowerPlaced?.Invoke();
     }
 }

@@ -73,6 +73,7 @@ public class Turret : MonoBehaviour
 
     void TrackEnemy()
     {
+        if (target == null) return;
         if (Vector3.Distance(transform.position, target.transform.position) > range)
         {
             target = null;
@@ -82,7 +83,6 @@ public class Turret : MonoBehaviour
         targetPosition.y = transform.position.y;
         transform.LookAt(targetPosition);
 
-        // Rotate the turret by 90 degrees around the Y-axis
         transform.Rotate(0, 90, 0);
     }
 }

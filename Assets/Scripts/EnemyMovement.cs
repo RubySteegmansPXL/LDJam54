@@ -34,8 +34,8 @@ public class EnemyMovement : MonoBehaviour
     {
         if (waypointIndex >= Waypoints.waypoints.Length - 1)
         {
-            GameManager.instance.player.TakeDamage(enemyComponent.damage);
             Destroy(gameObject);
+            GameManager.instance.player.TakeDamage(enemyComponent.damage);
             return;
         }
 

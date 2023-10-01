@@ -12,10 +12,11 @@ public class Player : MonoBehaviour
 
     public int TilesUnlocked;
     private int startTiles = 1;
+    public int MaxTiles = 5;
 
     public int score = 0;
 
-    void Start()
+    void Awake()
     {
         Money = startMoney;
         Lives = startLives;
@@ -33,10 +34,15 @@ public class Player : MonoBehaviour
     {
         EventManager.OnWaveCompleted -= AddScore;
     }
-
-    private void AddScore(int Score)
+    public void AddMoney(int money)
     {
-        score += Score;
+        Money += money;
+        EventManager.MoneyGained();
+    }
+
+    private void AddScore()
+    {
+        score++;
     }
 
     public void TakeDamage(int dmg)
@@ -46,6 +52,20 @@ public class Player : MonoBehaviour
         if(Lives <= 0)
         {
             EventManager.instance.GameStateChanged(GameState.GAMEOVER);
+            return;
         }
+
+        EventManager.DamageTaken();
+    }
+
+    public void Buy(int cost)
+    {
+        Money -= cost;
+        EventManager.ItemBought();
+    }
+
+    public void BuyTile()
+    {
+        TilesUnlocked++;
     }
 }

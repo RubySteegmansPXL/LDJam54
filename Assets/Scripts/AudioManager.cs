@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public AudioClip[] turtleShootsSounds;
+    public AudioClip[] wallHitSounds;
+    public AudioClip towerPlacedSound;
+    public AudioClip startGameSound;
+    public AudioClip gameOverSound;
+    public AudioSource audioSource;
+    public AudioClip powerupPickupSound;
+
+    private void Awake()
     {
-        
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        EventManager.OnTowerPlaced += PlayerTowerPlacedSound;
+        EventManager.OnMoneyGained += PlayerTowerPlacedSound;
+        EventManager.OnItemBought += PlayerTowerPlacedSound;
+        EventManager.OnWaveCompleted += PlayerTowerPlacedSound;
+        EventManager.OnDamageTaken += PlayerTowerPlacedSound;
+    }
+
+    private void PlayerTowerPlacedSound()
+    {
+        audioSource.clip = towerPlacedSound;
+        audioSource.Play();
     }
 }

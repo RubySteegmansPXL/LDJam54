@@ -5,44 +5,56 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public Enemy[] enemyPrefabs;
-    public float timeBetweenWaves = 5f;
     public int initialNumberOfEnemies = 5;
-    public float timeBetweenSpawns = 1f;
-    public float spawnIncreaseFactor = 1.5f;
-    public float spawnTimeDecreaseFactor = 0.9f;
+    public int initialNumberOfGroups = 7;
     public int currentWave = 1;
 
     private int enemiesToSpawn;
-    private float currentSpawnTime;
+    private int groupsToSpawn;
+    private float minSpawnTime = 1f;
+    private float maxSpawnTime = 3f;
+    private float minGroupTime = 5f;
+    private float maxGroupTime = 15f;
     private bool isWaveInProgress = false;
 
     private void Start()
     {
         enemiesToSpawn = initialNumberOfEnemies;
-        currentSpawnTime = timeBetweenSpawns;
+        groupsToSpawn = initialNumberOfGroups;
         StartCoroutine(SpawnWave());
     }
 
     private IEnumerator SpawnWave()
     {
+        if(currentWave > 1) { yield return new WaitForSeconds(20f); }
         isWaveInProgress = true;
-        for (int i = 0; i < enemiesToSpawn; i++)
+        for (int i = 0; i < groupsToSpawn; i++)
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(currentSpawnTime);
+            StartCoroutine(SpawnGroup());
+            yield return new WaitForSeconds(Mathf.RoundToInt(Random.Range(minGroupTime, maxGroupTime)));
         }
         isWaveInProgress = false;
     }
+
+    private IEnumerator SpawnGroup()
+    {
+        for (int i = 0; i < Random.Range(1, enemiesToSpawn); i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(Mathf.RoundToInt(Random.Range(minSpawnTime, maxSpawnTime)));
+        }
+    }
+
 
     private void Update()
     {
         if (!isWaveInProgress && FindObjectsOfType<Enemy>().Length == 0)
         {
             currentWave++;
-            enemiesToSpawn = Mathf.RoundToInt(enemiesToSpawn * spawnIncreaseFactor);
-            currentSpawnTime *= spawnTimeDecreaseFactor;
+            groupsToSpawn *= Mathf.RoundToInt(Random.Range(1.2f, 1.7f));
+            enemiesToSpawn *= Mathf.RoundToInt(Random.Range(1.2f, 1.7f));
             StartCoroutine(SpawnWave());
-            EventManager.instance.WaveCompleted(1);
+            EventManager.instance.WaveCompleted();
         }
     }
 

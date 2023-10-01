@@ -72,6 +72,7 @@ public class ScreenFader : MonoBehaviour
         yield return FadeOut(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     IEnumerator QuitGame()
     {
         yield return FadeOut(2f);
