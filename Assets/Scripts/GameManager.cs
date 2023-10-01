@@ -1,18 +1,65 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager instance;
+
+    public bool isGameOver = false;
+    
+    public GameState gameState;
+    private EnemySpawner enemySpawner;
+    public Player player;
+
+    private void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        enemySpawner = GetComponent<EnemySpawner>();
     }
+
+    public void StartGame()
+    {
+        gameState = GameState.GAME;
+        enemySpawner.enabled = true;
+        EventManager.Start();
+    }
+
+    public void PauseGame()
+    {
+        gameState = GameState.PAUSE;
+    }
+
+    public void ResumeGame()
+    {
+        gameState = GameState.GAME;
+    }
+
+    public void GameOver()
+    {
+        gameState = GameState.GAMEOVER;
+    }
+
+    public void MainMenu()
+    {
+        gameState = GameState.MENU;
+    }
+}
+
+public enum GameState
+{
+    GAMEOVER,
+    GAME,
+    MENU,
+    PAUSE
 }

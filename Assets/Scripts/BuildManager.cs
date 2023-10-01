@@ -17,20 +17,10 @@ public class BuildManager : MonoBehaviour
         instance = this;
     }
 
-    public GameObject buildEffect;
-    public GameObject sellEffect;
-
-
     private TurretBlueprint turretToBuild;
-    public int currentTurrets = 0;
-    private int turretLimit = 1;
+    public int towerCount = 0;
 
-    public int TurretLimit
-    {
-        set { turretLimit = value;}
-    }
-
-    public bool CanBuild { get { return turretToBuild != null || currentTurrets >= turretLimit; } }
+    public bool CanBuild { get { return turretToBuild != null; } }
     public bool HasMoney { get { return PlayerStats.Money >= turretToBuild.cost; } }
 
     public void SelectTurretToBuild(TurretBlueprint turret)
