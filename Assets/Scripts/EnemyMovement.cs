@@ -24,6 +24,9 @@ public class EnemyMovement : MonoBehaviour
 
         transform.position = transform.position + direction * speed * Time.deltaTime;
 
+        Vector3 targetPosition = target.position;
+        transform.LookAt(targetPosition);
+
         if (Vector3.Distance(transform.position, target.transform.position) < 0.2f)
         {
             GetNextWaypoint();

@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
     public Button backButton;
-    public Button startButton;
+    public Button back2Button;    
     public GameObject gameOverMenu;
-    public GameObject pauseMenu;
-    public GameObject rulesMenu;
+    public GameObject thankYouMenu;
+    public UIhandler uiHandler;
     public GameObject shop;
     public GameObject statsUI;
 
     private void Start()
     {
         backButton.onClick.AddListener(BackButtonClicked);
-        startButton.onClick.AddListener(StartButtonClicked);
+        back2Button.onClick.AddListener(BackButtonClicked);
     }
 
     private void BackButtonClicked()
@@ -26,8 +27,10 @@ public class Menu : MonoBehaviour
 
     private void StartButtonClicked()
     {
-        rulesMenu.SetActive(false);
         statsUI.SetActive(true);
+        shop.SetActive(true);
+        uiHandler.enabled = true;
+        EventManager.Start();
     }
 
     public void OpenShop()
@@ -36,6 +39,19 @@ public class Menu : MonoBehaviour
     }
     public void CloseShop()
     {
+        shop.SetActive(false);
+    }
+
+    public void Thanks()
+    {
+        thankYouMenu.SetActive(true);
+        statsUI.SetActive(false);
+        shop.SetActive(false);
+    }
+    private void GameOver()
+    {
+        gameOverMenu.SetActive(true);
+        statsUI.SetActive(false);
         shop.SetActive(false);
     }
 

@@ -15,7 +15,7 @@ public class UIhandler : MonoBehaviour
     {
         EventManager.OnMoneyGained += MoneyChanged;
         EventManager.OnItemBought += MoneyChanged;
-        EventManager.OnWaveCompleted += WaveCompleted;
+        EventManager.OnWaveCompleted += () => Invoke(nameof(WaveCompleted), 0.1f);
         EventManager.OnDamageTaken += TookDamage;
     }
     // Start is called before the first frame update
@@ -23,7 +23,6 @@ public class UIhandler : MonoBehaviour
     {
         gameManager = GameManager.instance;
         player = gameManager.player;
-        Debug.Log(player.Money + " health: " + player.Lives + " score: " + player.score);
 
         waveCount.text = "" + player.score;
         healthCount.text = "" + player.Lives;

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public int MaxTiles = 5;
 
     public int score = 0;
+    public Menu menu;
 
     void Awake()
     {
@@ -25,6 +26,14 @@ public class Player : MonoBehaviour
         score = 0;
     }
 
+    public void Reset()
+    {
+        Money = startMoney;
+        Lives = startLives;
+        TilesUnlocked = startTiles;
+
+        score = 0;
+    }
     private void OnEnable()
     {
         EventManager.OnWaveCompleted += AddScore;
@@ -43,6 +52,10 @@ public class Player : MonoBehaviour
     private void AddScore()
     {
         score++;
+        if(score == 5)
+        {
+            menu.Thanks();
+        }
     }
 
     public void TakeDamage(int dmg)

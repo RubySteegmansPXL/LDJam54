@@ -44,13 +44,15 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("EnemySpawner not found in the scene!");
         }
+        gameState = GameState.GAME;
+        enemySpawner.enabled = true;
+        player.Reset();
+        EventManager.Start();
     }
 
     public void StartGame()
     {
-        gameState = GameState.GAME;
-        enemySpawner.enabled = true;
-        EventManager.Start();
+
     }
 
     public void PauseGame()
@@ -75,7 +77,6 @@ public class GameManager : MonoBehaviour
             Destroy(enemy.gameObject);
         }
 
-        gameOverMenu.SetActive(true);
         gameOverText.text = "Oops, you died... You made it to wave: " + player.score;
     }
 

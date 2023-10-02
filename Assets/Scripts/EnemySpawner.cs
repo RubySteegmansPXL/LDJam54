@@ -26,8 +26,8 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        if(currentWave > 1) { yield return new WaitForSeconds(20f); }
         isWaveInProgress = true;
+        if (currentWave > 1) { yield return new WaitForSeconds(20f); }
         for (int i = 0; i < groupsToSpawn; i++)
         {
             StartCoroutine(SpawnGroup());
@@ -63,5 +63,6 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         Enemy e = Instantiate(enemyPrefab);
         e.transform.position = transform.position;
+        e.transform.rotation = transform.rotation;
     }
 }

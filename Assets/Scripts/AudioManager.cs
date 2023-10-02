@@ -5,7 +5,6 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip[] turtleShootsSounds;
-    public AudioClip[] wallHitSounds;
     public AudioClip towerPlacedSound;
     public AudioClip startGameSound;
     public AudioClip gameOverSound;
@@ -14,7 +13,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip waveCompletedSound;
     public AudioClip damageTakenSound;
     public AudioSource audioSource;
-    public AudioClip powerupPickupSound;
 
     private void Awake()
     {
@@ -74,7 +72,7 @@ public class AudioManager : MonoBehaviour
     }
     private void WaveCompleted()
     {
-        audioSource.clip = itemBoughtSound;
+        audioSource.clip = waveCompletedSound;
         audioSource.Play();
     }
 
