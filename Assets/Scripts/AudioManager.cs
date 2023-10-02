@@ -9,6 +9,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip towerPlacedSound;
     public AudioClip startGameSound;
     public AudioClip gameOverSound;
+    public AudioClip moneyGainedSound;
+    public AudioClip itemBoughtSound;
+    public AudioClip waveCompletedSound;
+    public AudioClip damageTakenSound;
     public AudioSource audioSource;
     public AudioClip powerupPickupSound;
 
@@ -20,15 +24,69 @@ public class AudioManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnTowerPlaced += PlayerTowerPlacedSound;
-        EventManager.OnMoneyGained += PlayerTowerPlacedSound;
-        EventManager.OnItemBought += PlayerTowerPlacedSound;
-        EventManager.OnWaveCompleted += PlayerTowerPlacedSound;
-        EventManager.OnDamageTaken += PlayerTowerPlacedSound;
+        EventManager.OnMoneyGained += MoneyGained;
+        EventManager.OnItemBought += ItemBought;
+        EventManager.OnWaveCompleted += WaveCompleted;
+        EventManager.OnDamageTaken += DamageTaken;
+        EventManager.OnGameStart += GameStarted;
+        EventManager.OnTurtleShoots += TurtleShoots;
+        EventManager.OnGameOver += GameOver;
     }
 
+    private void OnDisable()
+    {
+        EventManager.OnTowerPlaced -= PlayerTowerPlacedSound;
+        EventManager.OnMoneyGained -= MoneyGained;
+        EventManager.OnItemBought-= ItemBought;
+        EventManager.OnWaveCompleted -= WaveCompleted;
+        EventManager.OnDamageTaken -= DamageTaken;
+        EventManager.OnGameStart -= GameStarted;
+        EventManager.OnTurtleShoots -= TurtleShoots;
+        EventManager.OnGameOver -= GameOver;
+    }
     private void PlayerTowerPlacedSound()
     {
         audioSource.clip = towerPlacedSound;
+        audioSource.Play();
+    }
+    private void MoneyGained()
+    {
+        audioSource.clip = moneyGainedSound;
+        audioSource.Play();
+    }
+    private void GameStarted()
+    {
+        audioSource.clip = startGameSound;
+        audioSource.Play();
+    }
+
+    private void TurtleShoots()
+    {
+        int randIntSound = Random.Range(0, turtleShootsSounds.Length - 1);
+        audioSource.clip = turtleShootsSounds[randIntSound];
+        audioSource.Play();
+    }
+
+    private void ItemBought()
+    {
+        audioSource.clip = itemBoughtSound;
+        audioSource.Play();
+    }
+    private void WaveCompleted()
+    {
+        audioSource.clip = itemBoughtSound;
+        audioSource.Play();
+    }
+
+    private void DamageTaken()
+    {
+        audioSource.clip = damageTakenSound;
+        audioSource.Play();
+    }
+
+    private void GameOver()
+    {
+        audioSource.clip = gameOverSound;
         audioSource.Play();
     }
 }

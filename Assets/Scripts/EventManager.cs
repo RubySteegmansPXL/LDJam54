@@ -22,11 +22,13 @@ public class EventManager : MonoBehaviour
     }
 
     public static event Action OnGameStart;
+    public static event Action OnGameOver;
     public static event Action OnWaveCompleted;
     public static event Action OnMoneyGained;
     public static event Action OnItemBought;
     public static event Action OnDamageTaken;
     public static event Action OnTowerPlaced;
+    public static event Action OnTurtleShoots;
     public static event Action<GameState> OnGameStateChanged;
 
     public void GameStateChanged(GameState state)
@@ -37,7 +39,7 @@ public class EventManager : MonoBehaviour
         }
         if(state == GameState.GAMEOVER)
         {
-            GameManager.instance.GameOver();
+            OnGameOver?.Invoke();
         }
     }
 
@@ -72,4 +74,10 @@ public class EventManager : MonoBehaviour
     {
         OnTowerPlaced?.Invoke();
     }
+
+    public static void TurtleShoots()
+    {
+        OnTurtleShoots?.Invoke();
+    }
+
 }

@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverMenu;
     public Text gameOverText;
 
+    private void OnEnable()
+    {
+        EventManager.OnGameStart += StartGame;
+        EventManager.OnGameOver += GameOver;
+    }
     private void Awake()
     {
         if (instance == null)
@@ -24,6 +29,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnGameStart -= StartGame;
+        EventManager.OnGameOver -= GameOver;
     }
 
     private void Start()
@@ -44,7 +55,9 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        gameState = GameState.PAUSE;
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            gameState = GameState.PAUSE;
+        }
     }
 
     public void ResumeGame()
