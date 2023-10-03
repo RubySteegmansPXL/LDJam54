@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         }
         gameState = GameState.GAME;
         enemySpawner.enabled = true;
-        player.Reset();
+        player.enabled = true;
         EventManager.Start();
     }
 

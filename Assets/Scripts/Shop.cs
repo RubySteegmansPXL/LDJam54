@@ -19,6 +19,8 @@ public class Shop : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Gamemanager: " + GameManager.instance);
+        Debug.Log("Player: " + GameManager.instance.player);
         int currentMoney = GameManager.instance.player.Money;
         int tilesUnlocked = GameManager.instance.player.TilesUnlocked;
         if (currentMoney < tileCosts[tilesUnlocked - 1] || tilesUnlocked == GameManager.instance.player.MaxTiles)
